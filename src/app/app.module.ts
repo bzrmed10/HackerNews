@@ -6,6 +6,10 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { MenuListComponent } from './components/menu-list/menu-list.component';
 import { ArticlesListComponent } from './components/articles-list/articles-list.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { ArticleComponent } from './components/articles-list/article/article.component';
+import { DateAgoPipe } from './pipes/date-ago.pipe';
+import { DescriptionPipe } from './pipes/description.pipe';
+
 
 @NgModule({
   declarations: [
@@ -13,7 +17,10 @@ import { FooterComponent } from './components/footer/footer.component';
     NavbarComponent,
     MenuListComponent,
     ArticlesListComponent,
-    FooterComponent
+    FooterComponent,
+    ArticleComponent,
+    DateAgoPipe,
+    DescriptionPipe
   ],
   imports: [
     BrowserModule

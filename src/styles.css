@@ -8,6 +8,10 @@ body {
   }
   .container {
       padding: 16px;
+      
+  }
+  .container-fluid{
+    margin-bottom: 100px;
   }
  
 /* font */
@@ -92,6 +96,7 @@ body {
     background: #FBC91B;
     padding: 40px;
     bottom: 0;
+    position: fixed;
  }
 
 .navbar-logo{
@@ -134,6 +139,7 @@ margin: 0px 3px;
 
 ul.menuList {
     margin-left: -45px;
+    
 }   
 
 ul.menuList li {
