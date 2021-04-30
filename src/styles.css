@@ -2,28 +2,56 @@
 @import "~font-awesome/css/font-awesome.min.css";
 
 body {
-    font-family: Open Sans;
-  background-color: #F2F2F2 !important;
+    font-family: Open Sans !important;
+    font-style: normal;
+        
   }
+  .container {
+      padding: 16px;
+  }
+ 
 /* font */
   .boldText{
-        
-        font-family: Open Sans;
-        font-style: normal;
+
         font-weight: bold;
         font-size: 16px;
-        line-height: 150%;
-       
         color: #000000;
 
+  }
+  .header{
+    
+    font-family: Open Sans;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 12px;
+    font-weight: 700;
+    color: rgba(0, 0, 0, 0.82);
+    margin-bottom: 5px !important;
 
   }
+
+  .description{
+
+    font-family: Open Sans;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 10px;
+    color: rgba(0, 0, 0, 0.82);
+    margin-bottom: 10px !important;
+
+  }
+  .detail{
+    font-family: Open Sans;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 8px;
+    color: rgba(0, 0, 0, 0.5);
+    margin-bottom: 0 !important;
+  }
   .regularText{
-        font-family: Open Sans;
-        font-style: normal;
+
         font-weight: normal;
         font-size: 16px;
-        line-height: 150%;
         color: #000000;
   }
 
@@ -51,14 +79,85 @@ body {
 
 /*navbar*/
 .navbar{
-    position: absolute;
+
     height: 51px;
-    left: 0px;
-    top: 0px;
+    width: 100%;
     background: #FFFFFF;
     box-shadow: 0px 3px 28px rgba(0, 0, 0, 0.08);
 }
 
+.footer{
+    width: 100%;
+    height: 99px;
+    background: #FBC91B;
+    padding: 40px;
+    bottom: 0;
+ }
+
 .navbar-logo{
     margin: auto;
 }
+.footer-logo{
+    margin-top: 15px;
+}
+
+.selectedBtn{
+    
+
+padding: 4px 12px;
+
+
+background: #FBC91B;
+border-radius: 12px;
+font-weight: bold;
+font-size: 16px;
+
+color: rgba(0, 0, 0, 0.82);
+margin: 0px 3px;
+
+}
+
+.notSelectedBtn{
+   
+
+padding: 4px 12px;
+background: #F2F2F2;
+border-radius: 12px;
+
+font-weight: bold;
+font-size: 16px;
+color: rgba(0, 0, 0, 0.82);
+order: 0;
+margin: 0px 3px;
+
+}
+
+ul.menuList {
+    margin-left: -45px;
+}   
+
+ul.menuList li {
+    display: inline;
+    text-align: center;
+    padding: 2px ;
+    width: 19%;
+    }
+
+ .articleBox{
+
+        width: 100%;
+        height: auto;
+        background: #FFFFFF;
+        box-shadow: 0px 3px 28px rgba(0, 0, 0, 0.08);
+        border-radius: 12px;
+
+ }   
+ .moreBtn{
+   
+width: 100%;
+height: 48px;
+border: none;
+background: #FFC700;
+border-radius: 12px;
+
+ }
