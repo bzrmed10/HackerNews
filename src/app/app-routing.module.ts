@@ -6,15 +6,17 @@ import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
 {
-    path : '' , redirectTo:'/new' ,pathMatch:'full'
+    path : '' , redirectTo:'articles/topstories' ,pathMatch:'full'
 },
 {
-  path:"new" , component : ArticlesListComponent,
+  path: 'articles/:articleType', component: ArticlesListComponent
 },
-{ 
-  path:"past" , component :ArticlesListComponent,
+
+{
+  path:'**', redirectTo: 'articles/topstories'
 }
 ];
+
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

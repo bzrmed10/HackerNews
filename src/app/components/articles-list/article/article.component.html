@@ -1,11 +1,11 @@
 <div class="col-xs-12 mt-4">
-    <div class="articleBox">
+    <div class="articleBox" (click)="openArticle(article.url)">
         <div class="container">
             <p class="header">{{article.title}}</p>
             <p class="description">
-                {{article.description | descriptionPipe}}
+                {{  article.text | descriptionPipe  }}
             </p>
-            <p class="detail"><i class="fa fa-clock-o"></i> {{article.createdAt | dateAgo}} | {{article.numberComments}} comments</p>
+            <p class="detail"><i class="fa fa-user"></i> {{article.by}} | <i class="fa fa-clock-o"></i> {{article.time | dateAgo}} | {{article.descendants}} comments</p>
         </div>
     </div>
 </div>

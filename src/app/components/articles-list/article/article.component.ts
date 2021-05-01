@@ -14,4 +14,10 @@ export class ArticleComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  openArticle(url : string){
+    if (url) {
+      window.open(url);
+    }
+  }
+
 }
