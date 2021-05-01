@@ -22,6 +22,7 @@ body {
         color: #000000;
 
   }
+
   .header{
     
     font-family: Open Sans;
@@ -60,7 +61,10 @@ body {
   }
 
   /* Colors*/
-
+  a:hover {
+     color: rgba(0, 0, 0, 0.82) !important; 
+     text-decoration: none !important; 
+}
   .primaryColor{
       color: #FBC91B;
   }
@@ -106,23 +110,11 @@ body {
     margin-top: 15px;
 }
 
-.selectedBtn{
-    
+.selected{
+ background-color: #FBC91B !important;
+    }
 
-padding: 4px 12px;
-
-
-background: #FBC91B;
-border-radius: 12px;
-font-weight: bold;
-font-size: 16px;
-
-color: rgba(0, 0, 0, 0.82);
-margin: 0px 3px;
-
-}
-
-.notSelectedBtn{
+.btnMenu{
    
 
 padding: 4px 12px;

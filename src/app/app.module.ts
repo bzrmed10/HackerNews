@@ -9,6 +9,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { ArticleComponent } from './components/articles-list/article/article.component';
 import { DateAgoPipe } from './pipes/date-ago.pipe';
 import { DescriptionPipe } from './pipes/description.pipe';
+import { AppRoutingModule } from './app-routing.module';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { DescriptionPipe } from './pipes/description.pipe';
     DescriptionPipe
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
