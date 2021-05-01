@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import { Article } from '../model/article.model';
 
 @Injectable({
   providedIn: 'root'
@@ -8,6 +9,8 @@ import { environment } from 'src/environments/environment';
 export class ArticleService {
 
   articlesService : number[];
+  articleService : Article;
+  errorService : string;
 
   constructor(private http : HttpClient) { }
 

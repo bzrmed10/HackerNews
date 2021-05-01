@@ -1,6 +1,12 @@
-   
+ 
    <ng-container *ngFor="let article of articles">
       <app-article [article] ="article"></app-article>
     </ng-container>
-   <button class="moreBtn boldText my-3" (click)="loadArticles()">Load More</button>
+    <ng-container *ngIf="loading" >
+      <div class="d-flex align-items-center justify-content-center">
+         <div class="spinner-border text-warning my-4"></div>
+      </div>
+   </ng-container>
+    <button class="moreBtn boldText my-3" (click)="loadArticles()" *ngIf="!loading">Load More</button>
+ 
   

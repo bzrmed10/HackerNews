@@ -11,6 +11,7 @@ import { ArticleComponent } from './components/articles-list/article/article.com
 import { DateAgoPipe } from './pipes/date-ago.pipe';
 import { DescriptionPipe } from './pipes/description.pipe';
 import { AppRoutingModule } from './app-routing.module';
+import { WebsitePipe } from './pipes/website.pipe';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { AppRoutingModule } from './app-routing.module';
     FooterComponent,
     ArticleComponent,
     DateAgoPipe,
-    DescriptionPipe
+    DescriptionPipe,
+    WebsitePipe
   ],
   imports: [
     BrowserModule,

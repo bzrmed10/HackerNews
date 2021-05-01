@@ -1,11 +1,16 @@
-<div class="col-xs-12 mt-4">
+<div class="col-xs-12 mt-3">
     <div class="articleBox" (click)="openArticle(article.url)">
         <div class="container">
-            <p class="header">{{article.title}}</p>
+            <p class="header">{{article.title}} 
+                <span class="primaryColor smallText">
+                    {{ article.url != null ? '('+ (article.url | website) +')' : '' }}
+                </span></p>
             <p class="description">
                 {{  article.text | descriptionPipe  }}
             </p>
-            <p class="detail"><i class="fa fa-user"></i> {{article.by}} | <i class="fa fa-clock-o"></i> {{article.time | dateAgo}} | {{article.descendants}} comments</p>
+            <p class="detail">
+                <i class="fa fa-user"></i> {{article.by}} | 
+                <i class="fa fa-times-circle"></i> {{article.time | dateAgo}} | <i *ngIf="article.descendants != null" class="fa fa-commenting"></i> {{ article.descendants != null  ?  article.descendants  : ''}} </p>
         </div>
     </div>
 </div>

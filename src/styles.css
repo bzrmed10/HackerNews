@@ -49,7 +49,7 @@ body {
     font-family: Open Sans;
     font-style: normal;
     font-weight: normal;
-    font-size: 8px;
+    font-size: 9px;
     color: rgba(0, 0, 0, 0.5);
     margin-bottom: 0 !important;
   }
@@ -58,6 +58,9 @@ body {
         font-weight: normal;
         font-size: 16px;
         color: #000000;
+  }
+  .smallText{
+    font-size: 10px;
   }
 
   /* Colors*/
