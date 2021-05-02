@@ -6,7 +6,7 @@
                     <a class="btnMenu" routerLinkActive="selected" routerLink="articles/newstories">New</a>
                 </li>
                 <li>
-                    <a class="btnMenu" routerLinkActive="selected" routerLink="articles/beststories">Past</a>
+                    <a class="btnMenu" routerLinkActive="selected" routerLink="articles/topstories">Top</a>
                 </li>
                 <li>
                     <a class="btnMenu" routerLinkActive="selected" routerLink="articles/showstories">Show</a>
@@ -14,7 +14,24 @@
                 <li>
                     <a class="btnMenu" routerLinkActive="selected" routerLink="articles/jobstories">Jobs</a>
                 </li>  
+                <li>
+                    <a class="btnMenu"><i class="fa fa-search" (click)="onSearchBtn()"></i></a>
+                </li>
             </ul>
+            
+        </div>
+        <div class="col-xs-12" *ngIf="showSearch">
+            <form #f="ngForm" (ngSubmit)="onSearch(f.value)" class="form-inline">
+              
+                <div class="input-group rounded">
+                      <input type="search" ngModel  class="form-control rounded" name="keyword" aria-describedby="search-addon" aria-label="Search">
+                    <button type="submit" class="input-group-text border-0" id="search-addon">
+                      <i class="fa fa-search"></i>
+                    </button>
+                  </div>
+                      
+            
+            </form>
         </div>
    
     

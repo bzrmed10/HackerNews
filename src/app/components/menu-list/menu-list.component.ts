@@ -1,4 +1,6 @@
+import { ArticleService } from '../../services/article.service';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-menu-list',
@@ -6,10 +8,20 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./menu-list.component.css']
 })
 export class MenuListComponent implements OnInit {
-
-  constructor() { }
+  
+  showSearch : boolean = false;
+  constructor(private articleService :ArticleService,private router :Router) { }
 
   ngOnInit(): void {
   }
+  onSearchBtn(){
+    this.showSearch = !this.showSearch;
+  }
 
+  onSearch(value:any){
+    
+      this.articleService.getSearchedItem(value.keyword);
+      this.router.navigateByUrl("/articles/search");
+
+  }
 }

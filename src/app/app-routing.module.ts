@@ -12,6 +12,7 @@ const routes: Routes = [
   path: 'articles/:articleType', component: ArticlesListComponent
 },
 
+
 {
   path:'**', redirectTo: 'articles/topstories'
 }

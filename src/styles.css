@@ -88,6 +88,26 @@ body {
     background: rgba(0, 0, 0, 0.82);
 }
 
+.form-control{
+  border: 1px solid #F2F2F2 !important;
+    border-radius: 12px !important;
+    background-color:#F2F2F2 !important;
+}
+
+button#search-addon {
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border-top-left-radius: 0%;
+  border-bottom-left-radius: 0%;
+  border-top-right-radius: 12px;
+  border-bottom-right-radius: 12px;
+}
+.form-control.rounded {
+  border-top-left-radius: 12px  !important;
+  border-bottom-left-radius: 12px !important;
+  border-top-right-radius: 0% !important;
+  border-bottom-right-radius: 0% !important;
+}
 /*navbar*/
 .navbar{
 

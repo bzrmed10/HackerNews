@@ -6,7 +6,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class DescriptionPipe implements PipeTransform {
 
-  transform(value: any, ...args: number[]): string {
+  transform(value: any, ...args: number[]): any {
     if(value){
       if(value.length < 140) return value;
       else{

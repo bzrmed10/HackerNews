@@ -5,12 +5,11 @@
                 <span class="primaryColor smallText">
                     {{ article.url != null ? '('+ (article.url | website) +')' : '' }}
                 </span></p>
-            <p class="description">
-                {{  article.text | descriptionPipe  }}
-            </p>
+                
+            <p class="description" [innerHtml]="article.text | descriptionPipe "></p>
             <p class="detail">
-                <i class="fa fa-user"></i> {{article.by}} | 
-                <i class="fa fa-times-circle"></i> {{article.time | dateAgo}} | <i *ngIf="article.descendants != null" class="fa fa-commenting"></i> {{ article.descendants != null  ?  article.descendants  : ''}} </p>
+                <i class="fa fa-user-o"></i> By : {{article.by}} | 
+                <i class="fa fa-clock-o"></i> {{article.time | dateAgo}} | <i *ngIf="article.descendants != null" class="fa fa-commenting-o"></i> {{ article.descendants != null  ?  article.descendants  : ''}} </p>
         </div>
     </div>
 </div>

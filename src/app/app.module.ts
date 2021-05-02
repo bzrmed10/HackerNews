@@ -12,6 +12,8 @@ import { DateAgoPipe } from './pipes/date-ago.pipe';
 import { DescriptionPipe } from './pipes/description.pipe';
 import { AppRoutingModule } from './app-routing.module';
 import { WebsitePipe } from './pipes/website.pipe';
+import { SafeHtmlPipe } from './pipes/safe-html-pipe.pipe';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -24,12 +26,14 @@ import { WebsitePipe } from './pipes/website.pipe';
     ArticleComponent,
     DateAgoPipe,
     DescriptionPipe,
-    WebsitePipe
+    WebsitePipe,
+    SafeHtmlPipe
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

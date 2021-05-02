@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import {map} from 'rxjs/operators';
 
+
 @Component({
   selector: 'app-articles-list',
   templateUrl: './articles-list.component.html',
@@ -23,11 +24,12 @@ export class ArticlesListComponent implements OnInit {
   constructor(private articleService :ArticleService,
               private activatedRoute : ActivatedRoute,
               private router : Router) { 
-   
+              
        
   }
   
   ngOnInit(): void {
+   
     this.activatedRoute.paramMap.subscribe(params => {
       this.articles = [];
       this.loading = true;
@@ -39,6 +41,10 @@ export class ArticlesListComponent implements OnInit {
           this.loadArticles();
 
         }).catch(error => this.error = error.message) 
+      }if(articleType == "search"){
+        this.loading = true;
+        this.articles = this.articleService.searchedArticle;
+        this.loading = false;
       }
     });
     
