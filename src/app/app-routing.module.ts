@@ -6,15 +6,14 @@ import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
 {
-    path : '' , redirectTo:'articles/topstories' ,pathMatch:'full'
+    path : '' , redirectTo:'articles/newstories' ,pathMatch:'full'
 },
 {
   path: 'articles/:articleType', component: ArticlesListComponent
 },
 
-
 {
-  path:'**', redirectTo: 'articles/topstories'
+  path:'**', redirectTo: 'articles/newstories'
 }
 ];
 

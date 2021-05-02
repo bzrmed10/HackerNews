@@ -182,3 +182,7 @@ background: #FFC700;
 border-radius: 12px;
 
  }
+ .float-right {
+  float: right!important;
+  margin-top: 2px;
+}

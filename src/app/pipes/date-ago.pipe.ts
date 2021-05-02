@@ -5,7 +5,7 @@ import {Pipe, PipeTransform} from '@angular/core';
     pure: true
 })
 export class DateAgoPipe implements PipeTransform {
-
+// pipe that transform the time of creation in HN API into the form : 1min ago , 1 day ago ....
     transform(value: any, args?: any): any {
         if (value) {
             var date = new Date(value * 1000);

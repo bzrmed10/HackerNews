@@ -16,6 +16,7 @@ export class ArticleService {
   searchSubject : Subject<Article []> = new Subject();
   constructor(private http : HttpClient) { }
 
+  // return an array of ID items depending the type : new stories / top stories / jobs / show
   getAllArticlesByType(type :string){
     return new Promise((resolve, reject) => {
       this.http.get(`${environment.API_BASE_URL}${type}.json`)
@@ -29,6 +30,7 @@ export class ArticleService {
     });
   }
 
+  // return all the stories that containe the keyword 
   getSearchedItem(keyword : string){
     this.searchedArticle = [];
     return this.http.get(`${environment.API_BASE_URL_SEARCH}${keyword}&tags=story`)
@@ -51,28 +53,11 @@ export class ArticleService {
     });
   
   }
-  
-
-
-
- 
-
-  toTimestamp(strDate){
-    var datum = Date.parse(strDate);
-    return datum/1000;
-   }
-
-  UnixTimeToDate(unix : number){
-    
-    const milliseconds = unix * 1000 // 1575909015000
-
-    const dateObject = new Date(milliseconds)
-
-    let arrDate = dateObject.toLocaleString().split(',')
-    return arrDate[0] ;
-  }
-
+  //  getting the Data of the Item by giving the ID
   getArticle(id : number){
     return this.http.get(`${environment.API_BASE_URL}item/${id}.json`);
   }
+
+
+
 }
