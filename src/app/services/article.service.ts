@@ -13,7 +13,8 @@ export class ArticleService {
   articleService : Article;
   errorService : string;
   searchedArticle : Article []= [];
-  searchSubject : Subject<Article []> = new Subject();
+  searchSubject  = new Subject<Article []>();
+  newSearchKey = new Subject<boolean>() ;
   constructor(private http : HttpClient) { }
 
   // return an array of ID items depending the type : new stories / top stories / jobs / show
@@ -31,24 +32,31 @@ export class ArticleService {
   }
 
   // return all the stories that containe the keyword 
-  getSearchedItem(keyword : string){
+  getSearchedItem(keyword : string,page:number = null){
+    this.newSearchKey.next(false);
     this.searchedArticle = [];
-    return this.http.get(`${environment.API_BASE_URL_SEARCH}${keyword}&tags=story`)
-    .subscribe((data : any)=>{
-      data.hits.forEach(element => {
-        this.searchedArticle.push({
-          id:element.objectID,
-          title:element.title,
-          text:element.story_text,
-          time:element.created_at_i,
-          descendants:element.num_comments,
-          url:element.url,
-          by: element.author,
-          score :element.points
+    let pageFilter :string = "";
+    page ? pageFilter = `&page=${page}` : '';
+    const URL = `${environment.API_BASE_URL_SEARCH}${keyword}&tags=story`+pageFilter;
+    return this.http.get(URL)
+    .subscribe((data : any)=>{  
+      if(data.nbPages>data.page){
+        data.hits.forEach(element => {
+          this.searchedArticle.push({
+            id:element.objectID,
+            title:element.title,
+            text:element.story_text,
+            time:element.created_at_i,
+            descendants:element.num_comments,
+            url:element.url,
+            by: element.author,
+            score :element.points
+          }
+          )
         }
-         
-        )
-      });
+        );
+        this.searchSubject.next(this.searchedArticle);
+      }
       
     });
   

@@ -7,6 +7,14 @@
          <div class="spinner-border text-warning my-4"></div>
       </div>
    </ng-container>
-    <button class="moreBtn boldText my-3" (click)="loadArticles()" *ngIf="!loading">Load More</button>
+   <ng-container *ngIf="!loading && !isLoadSearch">
+      <button class="moreBtn boldText my-2" 
+      (click)="loadArticles()" >Load More</button>
+   </ng-container>
+   <ng-container *ngIf="!loading && isLoadSearch">
+      <button class="moreBtn boldText my-2" 
+      (click)="loadSearchResult()" >Load More search result</button>
+   </ng-container>
+    
  
   

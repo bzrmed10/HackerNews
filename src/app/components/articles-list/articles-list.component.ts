@@ -5,6 +5,7 @@ import { forkJoin, Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import {map} from 'rxjs/operators';
+import { error } from 'selenium-webdriver';
 
 
 @Component({
@@ -13,14 +14,16 @@ import {map} from 'rxjs/operators';
   styleUrls: ['./articles-list.component.css']
 })
 export class ArticlesListComponent implements OnInit {
-
+  
+  isLoadSearch : boolean;
   articles: Article[] = [] ;
   index : number =0;
+  searchPage : number = 0;
   loading : boolean;
   moreArticle : boolean;
   error : string;
   articleTypesArray = ["topstories","newstories","beststories","showstories","jobstories"]
-
+  searchKeyword : string;
   constructor(private articleService :ArticleService,
               private activatedRoute : ActivatedRoute,
               private router : Router) { 
@@ -35,6 +38,7 @@ export class ArticlesListComponent implements OnInit {
       this.loading = true;
       const articleType : string = params.get('articleType');
       if(this.articleTypesArray.includes(articleType)){
+        this.isLoadSearch = false;
         this.articleService.getAllArticlesByType(articleType).then(()=>{
           this.articles = [];
           this.index = 0;
@@ -42,18 +46,40 @@ export class ArticlesListComponent implements OnInit {
 
         }).catch(error => this.error = error.message) 
       }if(articleType == "search"){
-        this.loading = true;
-        this.articles = this.articleService.searchedArticle;
-        this.loading = false;
+        this.isLoadSearch = true;
+        this.searchPage = 0;
+        this.articleService.searchSubject.subscribe(ar =>{
+          this.loading = true;
+          this.articles = [...this.articles,...ar];
+          this.loading = false;
+        });
+        this.articleService.newSearchKey.subscribe(newK=>{
+        if(newK == true){
+          this.loading = true;
+          this.articles = [];
+          this.loading = false;
+        }
+        });
+        //this.articles = this.articleService.searchedArticle;
+      
       }
     });
-    
+    this.activatedRoute.queryParamMap.subscribe(p =>{
+      this.loading = true;
+     if(p['params'].keyword){
+       this.searchKeyword = p['params'].keyword; 
+      this.searchPage = 0;
+      
+     this.articleService.getSearchedItem(p['params'].keyword);     
+     }
+      
+    })
     
   }
 
   loadArticles(){
     const articlesDataArr = [];
-    this.moreArticle = this.index + 10 < this.articleService.articlesService.length;
+    this.moreArticle = this.index + 5 < this.articleService.articlesService.length;
     if (this.moreArticle) {
       for (let i = this.index; i < this.index + 5; i++) {
         articlesDataArr.push(
@@ -72,8 +98,15 @@ export class ArticlesListComponent implements OnInit {
       }
       );
     }
-  
-  
+  }
+
+  loadSearchResult(){
+    const articleSearchArr = [];
+     this.searchPage = this.searchPage + 1;
+     this.loading = true;
+     this.articleService.getSearchedItem(this.searchKeyword,this.searchPage);
+    
+     
   }
 
 }
