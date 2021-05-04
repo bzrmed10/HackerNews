@@ -17,11 +17,13 @@ export class ArticlesListComponent implements OnInit {
   
   isLoadSearch : boolean;
   articles: Article[] = [] ;
+  noArticle : boolean;
   index : number =0;
   searchPage : number = 0;
   loading : boolean;
   moreArticle : boolean;
   error : string;
+  searchError:string;
   articleTypesArray = ["topstories","newstories","beststories","showstories","jobstories"]
   searchKeyword : string;
   constructor(private articleService :ArticleService,
@@ -34,10 +36,12 @@ export class ArticlesListComponent implements OnInit {
   ngOnInit(): void {
    
     this.activatedRoute.paramMap.subscribe(params => {
+      this.searchError="",
       this.articles = [];
       this.loading = true;
       const articleType : string = params.get('articleType');
       if(this.articleTypesArray.includes(articleType)){
+       
         this.isLoadSearch = false;
         this.articleService.getAllArticlesByType(articleType).then(()=>{
           this.articles = [];
@@ -45,13 +49,23 @@ export class ArticlesListComponent implements OnInit {
           this.loadArticles();
 
         }).catch(error => this.error = error.message) 
-      }if(articleType == "search"){
+      }
+      if(articleType == "search"){
         this.isLoadSearch = true;
         this.searchPage = 0;
         this.articleService.searchSubject.subscribe(ar =>{
-          this.loading = true;
-          this.articles = [...this.articles,...ar];
-          this.loading = false;
+          
+          if(ar.length == 0){
+            this.loading = false;
+            this.searchError ="No data found";
+          }else{
+            this.searchError="",
+            this.loading = true;
+            this.articles = [...this.articles,...ar];
+            this.loading = false;
+          
+          }
+          
         });
         this.articleService.newSearchKey.subscribe(newK=>{
         if(newK == true){
@@ -86,6 +100,7 @@ export class ArticlesListComponent implements OnInit {
           this.articleService.getArticle(this.articleService.articlesService[i])
         );
       }
+      
       this.loading = true;
       forkJoin(articlesDataArr).subscribe(
       (moreStories: Array<Article>) => {
@@ -97,7 +112,9 @@ export class ArticlesListComponent implements OnInit {
         this.loading = false;
       }
       );
+      
     }
+    
   }
 
   loadSearchResult(){

@@ -40,24 +40,32 @@ export class ArticleService {
     const URL = `${environment.API_BASE_URL_SEARCH}${keyword}&tags=story`+pageFilter;
     return this.http.get(URL)
     .subscribe((data : any)=>{  
-      if(data.nbPages>data.page){
-        data.hits.forEach(element => {
-          this.searchedArticle.push({
-            id:element.objectID,
-            title:element.title,
-            text:element.story_text,
-            time:element.created_at_i,
-            descendants:element.num_comments,
-            url:element.url,
-            by: element.author,
-            score :element.points
+        if(data.nbHits != 0){
+          if(data.nbPages>data.page){
+          data.hits.forEach(element => {
+            this.searchedArticle.push({
+              id:element.objectID,
+              title:element.title,
+              text:element.story_text,
+              time:element.created_at_i,
+              descendants:element.num_comments,
+              url:element.url,
+              by: element.author,
+              score :element.points
+            }
+            )
           }
-          )
+          );
+          this.searchSubject.next(this.searchedArticle);
         }
-        );
+      }else{
         this.searchSubject.next(this.searchedArticle);
-      }
+        }
+        
       
+      
+    },error=>{
+      console.log(error);
     });
   
   }

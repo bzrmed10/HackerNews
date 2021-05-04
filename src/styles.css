@@ -186,3 +186,9 @@ border-radius: 12px;
   float: right!important;
   margin-top: 2px;
 }
+
+
+input.ng-touched.ng-invalid{
+
+  border: 1px solid rgb(228, 116, 116) !important;
+}

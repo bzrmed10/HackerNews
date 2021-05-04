@@ -24,8 +24,17 @@
             <form #f="ngForm" (ngSubmit)="onSearch(f.value)" class="form-inline">
               
                 <div class="input-group rounded">
-                      <input type="search" ngModel  class="form-control rounded" name="keyword" aria-describedby="search-addon" aria-label="Search">
-                    <button type="submit" class="input-group-text border-0" id="search-addon">
+                      <input 
+                      type="search" 
+                      placeholder="Search"
+                      ngModel  
+                      class="form-control rounded" 
+                      name="keyword" 
+                      aria-describedby="search-addon" 
+                      aria-label="Search"
+                      required
+                      >
+                    <button type="submit" class="input-group-text border-0" id="search-addon" [disabled]='!f.valid'>
                       <i class="fa fa-search"></i>
                     </button>
                   </div>

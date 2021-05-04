@@ -1,20 +1,28 @@
- 
-   <ng-container *ngFor="let article of articles">
-      <app-article [article] ="article"></app-article>
-    </ng-container>
-    <ng-container *ngIf="loading" >
-      <div class="d-flex align-items-center justify-content-center">
-         <div class="spinner-border text-warning my-4"></div>
-      </div>
-   </ng-container>
-   <ng-container *ngIf="!loading && !isLoadSearch">
-      <button class="moreBtn boldText my-2" 
-      (click)="loadArticles()" >Load More</button>
-   </ng-container>
-   <ng-container *ngIf="!loading && isLoadSearch">
-      <button class="moreBtn boldText my-2" 
-      (click)="loadSearchResult()" >Load More search result</button>
-   </ng-container>
+
+      <ng-container *ngFor="let article of articles">
+         <app-article [article] ="article"></app-article>
+       </ng-container>
+       <ng-container *ngIf="loading" >
+         <div class="d-flex align-items-center justify-content-center">
+            <div class="spinner-border text-warning my-4"></div>
+         </div>
+      </ng-container>
+      <ng-container *ngIf="!loading && !isLoadSearch">
+         <button class="moreBtn boldText my-4" 
+         (click)="loadArticles()" >Load More</button>
+      </ng-container>
+      <ng-container *ngIf="!loading && isLoadSearch && !searchError">
+         <button class="moreBtn boldText my-4" 
+         (click)="loadSearchResult()" >Load More search result</button>
+      </ng-container>
+      <ng-container *ngIf="searchError">
+         <div class="alert alert-warning my-2" role="alert">
+            {{searchError}}
+          </div>
+      </ng-container>
+
+   
+
     
  
   
