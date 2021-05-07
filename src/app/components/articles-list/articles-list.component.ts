@@ -1,11 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Article } from 'src/app/model/article.model';
 import { ArticleService } from '../../services/article.service';
-import { forkJoin, Observable } from 'rxjs';
+import { forkJoin, Observable, Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
-import {map} from 'rxjs/operators';
+import {map, tap} from 'rxjs/operators';
 import { error } from 'selenium-webdriver';
+import { Store } from '@ngrx/store';
+import { GetArticleAction } from 'src/app/store/articles.actions';
+import { ArticlesState, ArticleStateEnum } from '../../store/articles.reducer';
 
 
 @Component({
@@ -14,116 +17,39 @@ import { error } from 'selenium-webdriver';
   styleUrls: ['./articles-list.component.css']
 })
 export class ArticlesListComponent implements OnInit {
+
   
-  isLoadSearch : boolean;
-  articles: Article[] = [] ;
-  noArticle : boolean;
-  index : number =0;
-  searchPage : number = 0;
-  loading : boolean;
-  moreArticle : boolean;
-  error : string;
-  searchError:string;
   articleTypesArray = ["topstories","newstories","beststories","showstories","jobstories"]
-  searchKeyword : string;
+
+  
+  articleState$ :Observable <ArticlesState> | null = null;
+  articles :Article;
+  readonly ArticleStateEnum = ArticleStateEnum;
+
   constructor(private articleService :ArticleService,
               private activatedRoute : ActivatedRoute,
-              private router : Router) { 
+              private store : Store<any>) { 
               
        
   }
   
   ngOnInit(): void {
+
    
     this.activatedRoute.paramMap.subscribe(params => {
-      this.searchError="",
-      this.articles = [];
-      this.loading = true;
       const articleType : string = params.get('articleType');
       if(this.articleTypesArray.includes(articleType)){
-       
-        this.isLoadSearch = false;
-        this.articleService.getAllArticlesByType(articleType).then(()=>{
-          this.articles = [];
-          this.index = 0;
-          this.loadArticles();
-
-        }).catch(error => this.error = error.message) 
+          this.store.dispatch(new GetArticleAction(articleType));
       }
-      if(articleType == "search"){
-        this.isLoadSearch = true;
-        this.searchPage = 0;
-        this.articleService.searchSubject.subscribe(ar =>{
-          
-          if(ar.length == 0){
-            this.loading = false;
-            this.searchError ="No data found";
-          }else{
-            this.searchError="",
-            this.loading = true;
-            this.articles = [...this.articles,...ar];
-            this.loading = false;
-          
-          }
-          
-        });
-        this.articleService.newSearchKey.subscribe(newK=>{
-        if(newK == true){
-          this.loading = true;
-          this.articles = [];
-          this.loading = false;
-        }
-        });
-        //this.articles = this.articleService.searchedArticle;
-      
-      }
-    });
-    this.activatedRoute.queryParamMap.subscribe(p =>{
-      this.loading = true;
-     if(p['params'].keyword){
-       this.searchKeyword = p['params'].keyword; 
-      this.searchPage = 0;
-      
-     this.articleService.getSearchedItem(p['params'].keyword);     
-     }
-      
-    })
-    
-  }
-
-  loadArticles(){
-    const articlesDataArr = [];
-    this.moreArticle = this.index + 5 < this.articleService.articlesService.length;
-    if (this.moreArticle) {
-      for (let i = this.index; i < this.index + 5; i++) {
-        articlesDataArr.push(
-          this.articleService.getArticle(this.articleService.articlesService[i])
-        );
-      }
-      
-      this.loading = true;
-      forkJoin(articlesDataArr).subscribe(
-      (moreStories: Array<Article>) => {
-        this.articles = [...this.articles, ...moreStories];
-        this.loading = false;
-        this.index = this.index + 5;
-      },
-      () => {
-        this.loading = false;
-      }
-      );
-      
-    }
-    
-  }
-
-  loadSearchResult(){
-    const articleSearchArr = [];
-     this.searchPage = this.searchPage + 1;
-     this.loading = true;
-     this.articleService.getSearchedItem(this.searchKeyword,this.searchPage);
-    
      
+    });
+    
+    this.articleState$ = this.store.pipe(
+      map((state)=> state.articleState));
+    
   }
+
+ 
+
 
 }

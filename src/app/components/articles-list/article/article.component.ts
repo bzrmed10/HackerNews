@@ -12,6 +12,7 @@ export class ArticleComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+
   }
 
   openArticle(url : string){

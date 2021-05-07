@@ -1,25 +1,30 @@
 
-      <ng-container *ngFor="let article of articles">
-         <app-article [article] ="article"></app-article>
-       </ng-container>
-       <ng-container *ngIf="loading" >
-         <div class="d-flex align-items-center justify-content-center">
-            <div class="spinner-border text-warning my-4"></div>
-         </div>
-      </ng-container>
-      <ng-container *ngIf="!loading && !isLoadSearch">
-         <button class="moreBtn boldText my-4" 
-         (click)="loadArticles()" >Load More</button>
-      </ng-container>
-      <ng-container *ngIf="!loading && isLoadSearch && !searchError">
-         <button class="moreBtn boldText my-4" 
-         (click)="loadSearchResult()" >Load More search result</button>
-      </ng-container>
-      <ng-container *ngIf="searchError">
-         <div class="alert alert-warning my-2" role="alert">
-            {{searchError}}
-          </div>
-      </ng-container>
+    <ng-container  *ngIf="articleState$ | async as state" [ngSwitch] ="state.dataState" >
+
+        <ng-container *ngSwitchCase="ArticleStateEnum.INITIAL">
+            <div class="p-2"> Initial State</div>
+        </ng-container>
+        <ng-container *ngSwitchCase="ArticleStateEnum.LOADING">
+            <div class="d-flex align-items-center justify-content-center">
+                <div class="spinner-border text-warning my-4"></div>
+             </div>
+        </ng-container>
+        <ng-container *ngSwitchCase="ArticleStateEnum.ERROR">
+            <div class="alert alert-warning my-2" role="alert">{{state.errorMessage}}</div>
+        </ng-container>
+        <ng-container *ngSwitchCase="ArticleStateEnum.LOADED">
+            <ng-container *ngFor="let article of state.articles">
+                <app-article [article] ="article"></app-article>
+            </ng-container>
+            
+        </ng-container>
+    </ng-container>
+      
+        
+    
+
+
+  
 
    
 

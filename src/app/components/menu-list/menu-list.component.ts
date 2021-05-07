@@ -21,8 +21,6 @@ export class MenuListComponent implements OnInit {
   onSearch(value:any){
    
      if(value.keyword != ""){
-      this.articleService.newSearchKey.next(true);
-      this.articleService.getSearchedItem(value.keyword);
       this.router.navigateByUrl("/articles/search?keyword="+value.keyword);
      }
       

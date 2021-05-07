@@ -13,7 +13,12 @@ import { DescriptionPipe } from './pipes/description.pipe';
 import { AppRoutingModule } from './app-routing.module';
 import { WebsitePipe } from './pipes/website.pipe';
 import { SafeHtmlPipe } from './pipes/safe-html-pipe.pipe';
+import { ArticleEffects } from './store/articles.effects';
 import { FormsModule } from '@angular/forms';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { articleReducer } from './store/articles.reducer';
 
 
 @NgModule({
@@ -33,7 +38,10 @@ import { FormsModule } from '@angular/forms';
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    StoreModule.forRoot({articleState :articleReducer }),
+    EffectsModule.forRoot([ArticleEffects]),
+    StoreDevtoolsModule.instrument()
   ],
   providers: [],
   bootstrap: [AppComponent]
