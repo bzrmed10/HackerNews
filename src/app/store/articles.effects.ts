@@ -1,8 +1,17 @@
 import { forkJoin, Observable , of } from 'rxjs';
 import { Injectable } from "@angular/core";
 import { Actions, createEffect ,ofType } from "@ngrx/effects";
-import { ArticleActions, ArticleActionsTypes, GetArticleAction, GetArticleActionError, GetArticleActionSuccess, GetArticleIdAction, GetMoreArticleActionSuccess } from './articles.actions';
-import { catchError, flatMap, map ,mergeMap, switchMap, tap} from 'rxjs/operators';
+import {
+    ArticleActions,
+    ArticleActionsTypes,
+    GetArticleAction,
+    GetArticleActionError,
+    GetArticleActionSuccess,
+    GetArticleIdAction,
+    GetMoreInitialArticleAction,
+    LoadMoreArticlesAction
+} from './articles.actions';
+import { catchError, map ,mergeMap} from 'rxjs/operators';
 import { ArticleService } from '../services/article.service';
 import { Article } from '../model/article.model';
 
@@ -40,7 +49,7 @@ export class ArticleEffects {
                         return this.articleService.getArticle(action.payload[0])
                         .pipe(
                             map((article : Article) => {    
-                             return new GetMoreArticleActionSuccess({articleId:action.payload,article:article,index:0});
+                             return new GetMoreInitialArticleAction({articleId:action.payload,article:article,index:0});
                             }),
                             catchError((err)=>of(new GetArticleActionError(err.message)))
                         )
@@ -52,9 +61,9 @@ export class ArticleEffects {
 
         getMoreArticlesEffect:Observable<ArticleActions> = createEffect(
             ()=>this.effectActions.pipe(
-                ofType(ArticleActionsTypes.GET_MORE_ARTICLES_SUCCESS),
+                ofType(ArticleActionsTypes.GET_MORE_INITIAL_ARTICLES),
                 mergeMap((action : ArticleActions)=>{
-                     if(action.payload.index>4){
+                     if(action.payload.index>3){
                          
                         return this.articleService.getArticle(action.payload.articleId[action.payload.index])
                         .pipe(
@@ -67,17 +76,40 @@ export class ArticleEffects {
                         return this.articleService.getArticle(action.payload.articleId[action.payload.index+1])
                         .pipe(
                             map((article : Article) => {    
-                             return new GetMoreArticleActionSuccess({articleId:action.payload.articleId,article:article,index:action.payload.index+1});
-                             
+                             return new GetMoreInitialArticleAction({articleId:action.payload.articleId,article:article,index:action.payload.index+1});             
                             }),
                             catchError((err)=>of(new GetArticleActionError(err.message)))
                         )
                      }
-                        
-                    
-                        
                 })
-   
             )
         );
+
+
+
+        LoadMoreArticlesEffect:Observable<ArticleActions> = createEffect(
+            ()=>this.effectActions.pipe(
+                ofType(ArticleActionsTypes.LOAD_MORE_ARTICLES),
+                mergeMap((action : ArticleActions)=>{
+                     if(action.payload.indexStart>action.payload.indexEnd){
+                        return this.articleService.getArticle(action.payload.articleId[action.payload.indexStart])
+                        .pipe(
+                            map((article : Article) => {    
+                             return new GetArticleActionSuccess(article);
+                            }),
+                            catchError((err)=>of(new GetArticleActionError(err.message)))
+                        )
+                     }else{
+                        return this.articleService.getArticle(action.payload.articleId[action.payload.indexStart+1])
+                        .pipe(
+                            map((article : Article) => {    
+                             return new LoadMoreArticlesAction({articleId:action.payload.articleId,article:article,indexStart:action.payload.indexStart+1,indexEnd:action.payload.indexEnd});             
+                            }),
+                            catchError((err)=>of(new GetArticleActionError(err.message)))
+                        )
+                     }
+                })
+            )
+        );
+        
 }

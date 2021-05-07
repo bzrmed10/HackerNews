@@ -9,6 +9,7 @@ import { error } from 'selenium-webdriver';
 import { Store } from '@ngrx/store';
 import { GetArticleAction } from 'src/app/store/articles.actions';
 import { ArticlesState, ArticleStateEnum } from '../../store/articles.reducer';
+import { LoadMoreArticlesAction } from '../../store/articles.actions';
 
 
 @Component({
@@ -23,7 +24,7 @@ export class ArticlesListComponent implements OnInit {
 
   
   articleState$ :Observable <ArticlesState> | null = null;
-  articles :Article;
+  appState :ArticlesState;
   readonly ArticleStateEnum = ArticleStateEnum;
 
   constructor(private articleService :ArticleService,
@@ -45,10 +46,22 @@ export class ArticlesListComponent implements OnInit {
     });
     
     this.articleState$ = this.store.pipe(
-      map((state)=> state.articleState));
+      map(
+        (state) =>{ this.appState = state.articleState;return state.articleState}
+        ));
     
   }
 
+  loadArticles(){
+    let indexStart = this.appState.index +1;
+    let indexEnd = indexStart + 9;
+    this.store.dispatch(
+      new LoadMoreArticlesAction(
+        {articleId : this.appState.articleIds,
+          article : null,
+        indexStart: indexStart ,
+        indexEnd:indexEnd }));
+  }
  
 
 

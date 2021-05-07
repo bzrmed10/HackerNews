@@ -47,25 +47,38 @@ export function articleReducer(state = INIT_STATE ,action :Action ) :ArticlesSta
                 ...state ,
                 dataState:ArticleStateEnum.LOADED,
             }
-        case ArticleActionsTypes.GET_MORE_ARTICLES_SUCCESS : 
-        
+        case ArticleActionsTypes.GET_MORE_INITIAL_ARTICLES : 
         let newArr : Article[] = []; 
         if(state.articles.length == 0){
             newArr.push((<ArticleActions>action).payload.article);
-
         }else{
             let newArticle : Article[] = [];
             newArticle.push((<ArticleActions>action).payload.article);
             newArr = [...state.articles,...newArticle];
-
         }
-         
             return {
                 ...state ,
-                dataState:ArticleStateEnum.LOADED,
                 articles:newArr,
                 index:(<ArticleActions>action).payload.index
-            }    
+            }
+        case ArticleActionsTypes.LOAD_MORE_ARTICLES: 
+        if((<ArticleActions>action).payload.article != null){
+            let newArr2 : Article[] = []; 
+            let newArticle2 : Article[] = [];
+            newArticle2.push((<ArticleActions>action).payload.article);
+            newArr2 = [...state.articles,...newArticle2];
+        
+            return {
+                ...state ,
+                articles:newArr2,
+                index:(<ArticleActions>action).payload.indexStart
+            }
+        }else{
+            return {
+                ...state
+            }
+        }
+       
         case ArticleActionsTypes.GET_ARTICLES_ERROR: 
             return {
                 ...state ,

@@ -5,7 +5,8 @@ export enum ArticleActionsTypes {
     GET_ARTICLES = "[Article] Get Article",
     GET_ARTICLES_ID = "[Article] Get ID Article ",
     GET_ARTICLES_SUCCESS = "[Article] Get Article success",
-    GET_MORE_ARTICLES_SUCCESS = "[Article] Get more Article success",
+    GET_MORE_INITIAL_ARTICLES = "[Article] Get more initial Article",
+    LOAD_MORE_ARTICLES = "[Article] Load more Articles",
     GET_ARTICLES_ERROR  = "[Article] Get Article error",
 
 }
@@ -27,10 +28,16 @@ export class GetArticleActionSuccess implements Action {
     type : ArticleActionsTypes = ArticleActionsTypes.GET_ARTICLES_SUCCESS;
     constructor( public payload: Article ){}
 }
-export class GetMoreArticleActionSuccess implements Action {
+export class GetMoreInitialArticleAction implements Action {
 
-    type : ArticleActionsTypes = ArticleActionsTypes.GET_MORE_ARTICLES_SUCCESS;
+    type : ArticleActionsTypes = ArticleActionsTypes.GET_MORE_INITIAL_ARTICLES;
     constructor( public payload: {articleId: number[],article : Article,index : number} ){}
+}
+
+export class LoadMoreArticlesAction implements Action {
+
+    type : ArticleActionsTypes = ArticleActionsTypes.LOAD_MORE_ARTICLES;
+    constructor( public payload: {articleId: number[],article : Article,indexStart:number,indexEnd : number} ){}
 }
 
 export class GetArticleActionError implements Action {
@@ -42,4 +49,4 @@ export class GetArticleActionError implements Action {
 export type ArticleActions = 
 GetArticleAction | GetArticleActionSuccess 
 | GetArticleActionError | GetArticleIdAction
-|GetMoreArticleActionSuccess;
+|GetMoreInitialArticleAction;
