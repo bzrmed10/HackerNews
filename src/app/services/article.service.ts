@@ -30,8 +30,6 @@ export class ArticleService {
       page ? pageFilter = `&page=${page}` : '';
       const URL = `${environment.API_BASE_URL_SEARCH}${keyword}&tags=story`+pageFilter;
       return this.http.get<any>(URL);
-      
-    
     }
 
   

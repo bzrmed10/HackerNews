@@ -1,10 +1,9 @@
-import { forkJoin, Observable , of } from 'rxjs';
+import { Observable , of } from 'rxjs';
 import { Injectable } from "@angular/core";
 import { Actions, createEffect ,ofType } from "@ngrx/effects";
 import {
     ArticleActions,
     ArticleActionsTypes,
-    GetArticleAction,
     GetArticleActionError,
     GetArticleActionSuccess,
     GetArticleIdAction,

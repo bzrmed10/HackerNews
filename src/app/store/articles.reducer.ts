@@ -40,20 +40,23 @@ export function articleReducer(state = INIT_STATE ,action :Action ) :ArticlesSta
                 dataState:ArticleStateEnum.LOADING,
                 searching : false,
             }
-            case ArticleActionsTypes.GET_ARTICLES_ID : 
+
+        case ArticleActionsTypes.GET_ARTICLES_ID : 
             return {
                 ...state ,
                 articleIds:(<ArticleActions>action).payload,
                 articles:[]
             }
+
         case ArticleActionsTypes.GET_ARTICLES_SUCCESS :          
             return {
                 ...state ,
                 dataState:ArticleStateEnum.LOADED,
             }
+
         case ArticleActionsTypes.GET_MORE_INITIAL_ARTICLES : 
-        let newArr : Article[] = []; 
-        if(state.articles.length == 0){
+            let newArr : Article[] = []; 
+            if(state.articles.length == 0){
             newArr.push((<ArticleActions>action).payload.article);
         }else{
             let newArticle : Article[] = [];
@@ -65,8 +68,9 @@ export function articleReducer(state = INIT_STATE ,action :Action ) :ArticlesSta
                 articles:newArr,
                 index:(<ArticleActions>action).payload.index
             }
+
         case ArticleActionsTypes.LOAD_MORE_ARTICLES: 
-        if((<ArticleActions>action).payload.article != null){
+            if((<ArticleActions>action).payload.article != null){
             let newArr2 : Article[] = []; 
             let newArticle2 : Article[] = [];
             newArticle2.push((<ArticleActions>action).payload.article);
@@ -82,6 +86,7 @@ export function articleReducer(state = INIT_STATE ,action :Action ) :ArticlesSta
                 ...state
             }
         }
+
         case ArticleActionsTypes.SEARCH_KEYWORD:
             let dataState = ArticleStateEnum.LOADED;
             
@@ -109,12 +114,14 @@ export function articleReducer(state = INIT_STATE ,action :Action ) :ArticlesSta
                     articles:searchArr,
                     dataState:ArticleStateEnum.LOADED,
                 }
+
         case ArticleActionsTypes.GET_ARTICLES_ERROR: 
             return {
                 ...state ,
                 dataState:ArticleStateEnum.ERROR,
                 errorMessage:(<ArticleActions>action).payload
-            }         
+            }   
+                  
         default : return {...state} 
     }
 }

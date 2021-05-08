@@ -14,16 +14,15 @@ export class MenuListComponent implements OnInit {
 
   ngOnInit(): void {
   }
+  
   onSearchBtn(){
     this.showSearch = !this.showSearch;
   }
 
   onSearch(value:any){
-   
      if(value.keyword != ""){
       this.router.navigateByUrl("/articles/search?keyword="+value.keyword);
      }
-      
-
   }
+
 }

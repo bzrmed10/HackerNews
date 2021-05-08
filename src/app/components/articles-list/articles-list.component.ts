@@ -1,11 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Article } from 'src/app/model/article.model';
-import { ArticleService } from '../../services/article.service';
-import { forkJoin, Observable, Subscription } from 'rxjs';
-import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
-import {map, tap} from 'rxjs/operators';
-import { error } from 'selenium-webdriver';
+import { map } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { GetArticleAction, SearchKeywordAction } from 'src/app/store/articles.actions';
 import { ArticlesState, ArticleStateEnum } from '../../store/articles.reducer';
@@ -27,8 +23,7 @@ export class ArticlesListComponent implements OnInit {
   appState :ArticlesState;
   readonly ArticleStateEnum = ArticleStateEnum;
 
-  constructor(private articleService :ArticleService,
-              private activatedRoute : ActivatedRoute,
+  constructor(private activatedRoute : ActivatedRoute,
               private store : Store<any>) { 
               
        

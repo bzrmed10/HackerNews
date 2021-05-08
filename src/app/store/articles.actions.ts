@@ -67,4 +67,5 @@ export class GetArticleActionError implements Action {
 export type ArticleActions = 
 GetArticleAction | GetArticleActionSuccess 
 | GetArticleActionError | GetArticleIdAction
-|GetMoreInitialArticleAction | SearchKeywordAction | SearchKeywordActionSuccess;
+|GetMoreInitialArticleAction | SearchKeywordAction 
+| SearchKeywordActionSuccess;
