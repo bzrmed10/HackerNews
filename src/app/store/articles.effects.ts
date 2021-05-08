@@ -9,7 +9,8 @@ import {
     GetArticleActionSuccess,
     GetArticleIdAction,
     GetMoreInitialArticleAction,
-    LoadMoreArticlesAction
+    LoadMoreArticlesAction,
+    SearchKeywordActionSuccess
 } from './articles.actions';
 import { catchError, map ,mergeMap} from 'rxjs/operators';
 import { ArticleService } from '../services/article.service';
@@ -109,6 +110,48 @@ export class ArticleEffects {
                         )
                      }
                 })
+            )
+        );
+
+
+
+        SearchArticlesEffect:Observable<ArticleActions> = createEffect(
+            ()=>this.effectActions.pipe(
+                ofType(ArticleActionsTypes.SEARCH_KEYWORD),
+                mergeMap((action : ArticleActions)=>{
+                    
+                    let searchedArticle = [];
+                    return  this.articleService.getSearchedItem(action.payload.key,action.payload.page)
+                        .pipe(
+                            map((data : any)=>{  
+                            if(data.nbHits != 0){
+                              if(data.nbPages>data.page){
+                              data.hits.forEach(element => {
+                                searchedArticle.push({
+                                  id:element.objectID,
+                                  title:element.title,
+                                  text:element.story_text,
+                                  time:element.created_at_i,
+                                  descendants:element.num_comments,
+                                  url:element.url,
+                                  by: element.author,
+                                  score :element.points
+                                }
+                                )
+                              }
+                              );
+                             
+                            }
+                            return new SearchKeywordActionSuccess(searchedArticle);
+                          }else{
+                            return new GetArticleActionError("NOT FOUND");
+                          }
+                          
+                        }),
+                        catchError((err)=>of(new GetArticleActionError(err.message))))
+    
+                })
+   
             )
         );
         

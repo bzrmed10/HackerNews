@@ -24,22 +24,17 @@ export class ArticleService {
     
   }
 
-  getAll(articlesID) : Article[]{
-    let arrayArticle : Article[] = [] ;
-    const articlesDataArr = [];
-                                for (let i = 0; i < 5; i++) {
-                                    articlesDataArr.push(
-                                   this.getArticle(articlesID[i])
-                                    );   
-                                            
-                                    }
-                                forkJoin(articlesDataArr).subscribe(
-                                    (moreStories: Array<Article>) => {
-                                      arrayArticle = [...moreStories]
-                                      
-                                    });
-              return arrayArticle;
-  }
+    // return all the stories that containe the keyword 
+    getSearchedItem(keyword : string,page:number = null){
+      let pageFilter :string = "";
+      page ? pageFilter = `&page=${page}` : '';
+      const URL = `${environment.API_BASE_URL_SEARCH}${keyword}&tags=story`+pageFilter;
+      return this.http.get<any>(URL);
+      
+    
+    }
+
+  
 
   
 

@@ -16,10 +16,19 @@
             <ng-container *ngFor="let article of state.articles">
                 <app-article [article] ="article"></app-article>
             </ng-container>
-            <button class="moreBtn boldText my-4" 
-         (click)="loadArticles()" >Load More</button>
+
+            <ng-container *ngIf="!state.searching">
+                <button class="moreBtn boldText my-4" 
+                (click)="loadArticles()" >Load More</button>
+            </ng-container>
+            <ng-container *ngIf="state.searching">
+                <button class="moreBtn boldText my-4" 
+             (click)="loadSearchResult()" >Load More search result</button>
+            </ng-container>
         </ng-container>
+        
     </ng-container>
+    
       
         
     

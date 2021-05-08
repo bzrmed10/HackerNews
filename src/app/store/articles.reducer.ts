@@ -7,7 +7,7 @@ export enum ArticleStateEnum {
     LOADING = "Loading",
     LOADED = "Loaded",
     ERROR = "Error",
-    INITIAL = "Initial"
+    INITIAL = "Initial",
 }
 
 export interface ArticlesState {
@@ -15,7 +15,9 @@ export interface ArticlesState {
     articles : Article[],
     errorMessage : string,
     dataState : ArticleStateEnum,
-    index : number
+    index : number,
+    searching : boolean,
+    seachPage : number,
 
 }
 
@@ -24,8 +26,9 @@ const INIT_STATE :ArticlesState = {
     articles : [],
     errorMessage : "",
     dataState :ArticleStateEnum.INITIAL,
-    index : 0
-
+    index : 0,
+    searching : false,
+    seachPage : 0,
 
 }
 
@@ -34,7 +37,8 @@ export function articleReducer(state = INIT_STATE ,action :Action ) :ArticlesSta
         case ArticleActionsTypes.GET_ARTICLES : 
             return {
                 ...state ,
-                dataState:ArticleStateEnum.LOADING
+                dataState:ArticleStateEnum.LOADING,
+                searching : false,
             }
             case ArticleActionsTypes.GET_ARTICLES_ID : 
             return {
@@ -78,7 +82,33 @@ export function articleReducer(state = INIT_STATE ,action :Action ) :ArticlesSta
                 ...state
             }
         }
-       
+        case ArticleActionsTypes.SEARCH_KEYWORD:
+            let dataState = ArticleStateEnum.LOADED;
+            
+            if((<ArticleActions>action).payload.page == 0 ){
+                dataState = ArticleStateEnum.LOADING;
+            }
+
+            return {
+                ...state,
+                dataState:dataState,
+                articleIds :[],
+                searching :true,
+                seachPage :(<ArticleActions>action).payload.page
+            }
+        case ArticleActionsTypes.SEARCH_KEYWORD_SUCCESS:
+            let searchArr :Article[] = [];  
+            if(state.seachPage == 0 ){
+                searchArr = [...(<ArticleActions>action).payload];
+            }else{
+                searchArr = [...state.articles,...(<ArticleActions>action).payload];
+            }         
+            
+                return {
+                    ...state,
+                    articles:searchArr,
+                    dataState:ArticleStateEnum.LOADED,
+                }
         case ArticleActionsTypes.GET_ARTICLES_ERROR: 
             return {
                 ...state ,

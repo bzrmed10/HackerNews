@@ -8,6 +8,10 @@ export enum ArticleActionsTypes {
     GET_MORE_INITIAL_ARTICLES = "[Article] Get more initial Article",
     LOAD_MORE_ARTICLES = "[Article] Load more Articles",
     GET_ARTICLES_ERROR  = "[Article] Get Article error",
+    
+    SEARCH_KEYWORD = "[Article] search articles by Keyword",
+    SEARCH_KEYWORD_SUCCESS = "[Article] search articles by Keyword success",
+
 
 }
 
@@ -17,6 +21,20 @@ export class GetArticleAction implements Action {
     type : ArticleActionsTypes = ArticleActionsTypes.GET_ARTICLES;
     constructor( public payload:any){}
 }
+
+export class SearchKeywordAction implements Action {
+
+    type : ArticleActionsTypes = ArticleActionsTypes.SEARCH_KEYWORD;
+    constructor( public payload:{key :string , page : number}){}
+}
+export class SearchKeywordActionSuccess implements Action {
+
+    type : ArticleActionsTypes = ArticleActionsTypes.SEARCH_KEYWORD_SUCCESS;
+    constructor( public payload:Article[]){}
+}
+
+
+
 export class GetArticleIdAction implements Action {
 
     type : ArticleActionsTypes = ArticleActionsTypes.GET_ARTICLES_ID;
@@ -49,4 +67,4 @@ export class GetArticleActionError implements Action {
 export type ArticleActions = 
 GetArticleAction | GetArticleActionSuccess 
 | GetArticleActionError | GetArticleIdAction
-|GetMoreInitialArticleAction;
+|GetMoreInitialArticleAction | SearchKeywordAction | SearchKeywordActionSuccess;

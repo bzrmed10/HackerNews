@@ -7,7 +7,7 @@ import { ActivatedRoute } from '@angular/router';
 import {map, tap} from 'rxjs/operators';
 import { error } from 'selenium-webdriver';
 import { Store } from '@ngrx/store';
-import { GetArticleAction } from 'src/app/store/articles.actions';
+import { GetArticleAction, SearchKeywordAction } from 'src/app/store/articles.actions';
 import { ArticlesState, ArticleStateEnum } from '../../store/articles.reducer';
 import { LoadMoreArticlesAction } from '../../store/articles.actions';
 
@@ -21,7 +21,7 @@ export class ArticlesListComponent implements OnInit {
 
   
   articleTypesArray = ["topstories","newstories","beststories","showstories","jobstories"]
-
+  keySearch : string;
   
   articleState$ :Observable <ArticlesState> | null = null;
   appState :ArticlesState;
@@ -42,9 +42,19 @@ export class ArticlesListComponent implements OnInit {
       if(this.articleTypesArray.includes(articleType)){
           this.store.dispatch(new GetArticleAction(articleType));
       }
-     
+ 
     });
+    this.activatedRoute.queryParamMap.subscribe(p =>{
+      if(p['params'].keyword){
+        this.keySearch = p['params'].keyword;
+        this.store.dispatch(new SearchKeywordAction({key :this.keySearch , page : 0}))
     
+      }
+       
+     })
+
+
+
     this.articleState$ = this.store.pipe(
       map(
         (state) =>{ this.appState = state.articleState;return state.articleState}
@@ -59,10 +69,16 @@ export class ArticlesListComponent implements OnInit {
       new LoadMoreArticlesAction(
         {articleId : this.appState.articleIds,
           article : null,
-        indexStart: indexStart ,
-        indexEnd:indexEnd }));
+          indexStart: indexStart ,
+          indexEnd:indexEnd }));
   }
  
+
+  loadSearchResult(){
+    let page = this.appState.seachPage +1;
+    this.store.dispatch(new SearchKeywordAction({key :this.keySearch , page : page}))
+
+  }
 
 
 }
