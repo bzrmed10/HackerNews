@@ -3,10 +3,14 @@ import { ArticlesListComponent } from './components/articles-list/articles-list.
 
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { HomeComponent } from './components/home/home.component';
 
 const routes: Routes = [
 {
-    path : '' , redirectTo:'articles/newstories' ,pathMatch:'full'
+    path : '' , redirectTo:'home' ,pathMatch:'full'
+},
+{
+  path: 'home', component: HomeComponent
 },
 {
   path: 'articles/:articleType', component: ArticlesListComponent

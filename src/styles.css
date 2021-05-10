@@ -192,3 +192,25 @@ input.ng-touched.ng-invalid{
 
   border: 1px solid rgb(228, 116, 116) !important;
 }
+img.homeImg {
+  width:  80%;
+  height: 90px;
+}
+
+.homeNumbers{
+  font-size: 40px;
+  margin-bottom: 0rem !important;
+}
+.homeText{
+  font-size: 20px;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.borderRadiusLeft{
+  border-bottom-left-radius: 12px;
+  border-top-left-radius: 12px;
+}
+.borderRadiusRight{
+  border-bottom-right-radius: 12px;
+  border-top-right-radius: 12px;
+}

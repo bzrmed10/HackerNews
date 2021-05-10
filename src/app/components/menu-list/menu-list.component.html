@@ -12,6 +12,9 @@
                     <a class="btnMenu" routerLinkActive="selected" routerLink="articles/showstories">Show</a>
                 </li>
                 <li>
+                    <a class="btnMenu" routerLinkActive="selected" routerLink="articles/askstories">Ask</a>
+                </li>
+                <li>
                     <a class="btnMenu" routerLinkActive="selected" routerLink="articles/jobstories">Jobs</a>
                 </li>  
                 <li>
@@ -20,7 +23,7 @@
             </ul>
             
         </div>
-        <div class="col-xs-12" *ngIf="showSearch">
+        <div class="col-xs-12 mb-2" *ngIf="showSearch">
             <form #f="ngForm" (ngSubmit)="onSearch(f.value)" class="form-inline">
               
                 <div class="input-group rounded">

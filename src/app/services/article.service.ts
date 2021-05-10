@@ -2,8 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Article } from '../model/article.model';
-import { Subject, Observable, forkJoin } from 'rxjs';
-import { catchError, map ,mergeMap} from 'rxjs/operators';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -32,7 +31,21 @@ export class ArticleService {
       return this.http.get<any>(URL);
     }
 
-  
+    getNumStory(date:string){
+      return this.http.get(`https://hn.algolia.com/api/v1/search_by_date?tags=story&numericFilters=created_at_i>${date}`);
+    }
+
+    getNumComment(date:string){
+      return this.http.get(`https://hn.algolia.com/api/v1/search_by_date?tags=comment&numericFilters=created_at_i>${date}`);
+    }
+    getNumAsk(date:string){
+      return this.http.get(`https://hn.algolia.com/api/v1/search_by_date?tags=ask_hn&numericFilters=created_at_i>${date}`);
+    }
+
+    toTimestamp(strDate){
+      let datum = Date.parse(strDate);
+      return datum/1000;
+     }
 
   
 

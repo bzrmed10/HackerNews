@@ -16,7 +16,7 @@ import { LoadMoreArticlesAction } from '../../store/articles.actions';
 export class ArticlesListComponent implements OnInit {
 
   
-  articleTypesArray = ["topstories","newstories","beststories","showstories","jobstories"]
+  articleTypesArray = ["topstories","newstories","beststories","showstories","jobstories","askstories"]
   keySearch : string;
   
   articleState$ :Observable <ArticlesState> | null = null;

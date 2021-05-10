@@ -19,6 +19,7 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { articleReducer } from './store/articles.reducer';
+import { HomeComponent } from './components/home/home.component';
 
 
 @NgModule({
@@ -27,6 +28,7 @@ import { articleReducer } from './store/articles.reducer';
     NavbarComponent,
     MenuListComponent,
     ArticlesListComponent,
+    HomeComponent,
     FooterComponent,
     ArticleComponent,
     DateAgoPipe,
@@ -41,7 +43,7 @@ import { articleReducer } from './store/articles.reducer';
     FormsModule,
     StoreModule.forRoot({articleState :articleReducer }),
     EffectsModule.forRoot([ArticleEffects]),
-    StoreDevtoolsModule.instrument()
+    StoreDevtoolsModule.instrument(),
   ],
   providers: [],
   bootstrap: [AppComponent]
