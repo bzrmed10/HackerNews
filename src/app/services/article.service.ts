@@ -31,15 +31,18 @@ export class ArticleService {
       return this.http.get<any>(URL);
     }
 
-    getNumStory(date:string){
+    getNumStory(date){
       return this.http.get(`https://hn.algolia.com/api/v1/search_by_date?tags=story&numericFilters=created_at_i>${date}`);
     }
 
-    getNumComment(date:string){
+    getNumComment(date){
       return this.http.get(`https://hn.algolia.com/api/v1/search_by_date?tags=comment&numericFilters=created_at_i>${date}`);
     }
-    getNumAsk(date:string){
+    getNumAsk(date){
       return this.http.get(`https://hn.algolia.com/api/v1/search_by_date?tags=ask_hn&numericFilters=created_at_i>${date}`);
+    }
+    getNumShow(date){
+      return this.http.get(`https://hn.algolia.com/api/v1/search_by_date?tags=show_hn&numericFilters=created_at_i>${date}`);
     }
 
     toTimestamp(strDate){

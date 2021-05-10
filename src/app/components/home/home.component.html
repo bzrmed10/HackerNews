@@ -7,7 +7,11 @@
                     <img src="/assets/home/post.svg" class="homeImg" alt="Post"> 
                 </div>
                 <div class="col greyBgColor borderRadiusLeft">
-                   <p class="primaryColor homeNumbers text-center">500</p>
+                    <div class="d-flex justify-content-center mt-2" *ngIf="!nbStory">
+                        <div class="spinner-border text-warning" role="status">
+                        </div>
+                      </div>
+                   <p class="primaryColor homeNumbers text-center">{{ nbStory | number }}</p>
                    <p class="homeText text-center">Story</p>
                 </div>
             </div>
@@ -20,7 +24,11 @@
         <div class="container">
             <div class="row">
                 <div class="col greyBgColor borderRadiusRight">
-                    <p class="primaryColor homeNumbers text-center">23</p>
+                    <div class="d-flex justify-content-center mt-2" *ngIf="!nbComment">
+                        <div class="spinner-border text-warning" role="status">
+                        </div>
+                      </div>
+                    <p class="primaryColor homeNumbers text-center">{{ nbComment | number }}</p>
                     <p class="homeText text-center">Comment</p>
                  </div>
                 <div class="col">
@@ -41,7 +49,11 @@
                     <img src="/assets/home/ask.svg" class="homeImg" alt="Ask"> 
                 </div>
                 <div class="col greyBgColor borderRadiusLeft">
-                   <p class="primaryColor homeNumbers text-center">122</p>
+                    <div class="d-flex justify-content-center mt-2" *ngIf="!nbAsk">
+                        <div class="spinner-border text-warning" role="status">
+                        </div>
+                      </div>
+                   <p class="primaryColor homeNumbers text-center">{{ nbAsk | number }}</p>
                    <p class="homeText text-center">Ask</p>
                 </div>
             </div>
@@ -55,11 +67,15 @@
         <div class="container">
             <div class="row">
                 <div class="col greyBgColor borderRadiusRight">
-                    <p class="primaryColor homeNumbers text-center">23</p>
-                    <p class="homeText text-center">Job</p>
+                    <div class="d-flex justify-content-center mt-2" *ngIf="!nbShow">
+                        <div class="spinner-border text-warning" role="status">
+                        </div>
+                      </div>
+                    <p class="primaryColor homeNumbers text-center">{{ nbShow | number }} </p>
+                    <p class="homeText text-center">Show</p>
                  </div>
                 <div class="col">
-                    <img src="/assets/home/job.svg" class="homeImg" alt="Job"> 
+                    <img src="/assets/home/show.svg" class="homeImg" alt="Job"> 
                 </div>
             </div>
            
