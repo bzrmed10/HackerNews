@@ -1,4 +1,23 @@
-
+   <ng-container *ngIf="showDateInput">
+    
+        <form class="col-xs-12 mb-2">
+            <div class="form-group">
+              <div class="input-group">
+                <input class="form-control rounded" placeholder="yyyy-mm-dd"
+                       name="dp" [(ngModel)]="modelDate" ngbDatepicker #d="ngbDatepicker" (ngModelChange)="getPastArticle(modelDate)">
+                <div class="input-group-append">
+                  
+                  <button type="button" class="input-group-text border-0" id="search-addon" (click)="d.toggle()">
+                    <i class="fa fa-calendar-check-o"></i>
+                  </button>
+                
+                </div>
+              </div>
+            </div>
+          </form>
+   </ng-container>
+   
+   
     <ng-container  *ngIf="articleState$ | async as state" [ngSwitch] ="state.dataState" >
 
         <ng-container *ngSwitchCase="ArticleStateEnum.INITIAL">
@@ -17,14 +36,18 @@
                 <app-article [article] ="article"></app-article>
             </ng-container>
 
-            <ng-container *ngIf="!state.searching">
+            <ng-container *ngIf="state.searching == 'initial'">
                 <button class="moreBtn boldText my-4" 
                 (click)="loadArticles()" >Load More</button>
             </ng-container>
-            <ng-container *ngIf="state.searching">
+            <ng-container *ngIf="state.searching == 'search'">
                 <button class="moreBtn boldText my-4" 
              (click)="loadSearchResult()" >Load More search result</button>
             </ng-container>
+            <ng-container *ngIf="state.searching == 'pastArticle'">
+              <button class="moreBtn boldText my-4" 
+           (click)="loadMorePastArticles()" >Load More Past Result</button>
+          </ng-container>
         </ng-container>
         
     </ng-container>

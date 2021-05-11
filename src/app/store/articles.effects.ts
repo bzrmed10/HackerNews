@@ -8,6 +8,7 @@ import {
     GetArticleActionSuccess,
     GetArticleIdAction,
     GetMoreInitialArticleAction,
+    GetPastArticleActionSuccess,
     LoadMoreArticlesAction,
     SearchKeywordActionSuccess
 } from './articles.actions';
@@ -154,4 +155,46 @@ export class ArticleEffects {
             )
         );
         
+
+
+        GetPastArticlesEffect:Observable<ArticleActions> = createEffect(
+            ()=>this.effectActions.pipe(
+                ofType(ArticleActionsTypes.GET_PAST_ARTICLES),
+                mergeMap((action : ArticleActions)=>{
+                    
+                    let pastArticle = [];
+                    return  this.articleService
+                    .getPastArticles(action.payload.dateStart,action.payload.dateEnd,action.payload.page)
+                        .pipe(
+                            map((data : any)=>{  
+                            if(data.nbHits != 0){
+                              if(data.nbPages>data.page){
+                              data.hits.forEach(element => {
+                                pastArticle.push({
+                                  id:element.objectID,
+                                  title:element.title,
+                                  text:element.story_text,
+                                  time:element.created_at_i,
+                                  descendants:element.num_comments,
+                                  url:element.url,
+                                  by: element.author,
+                                  score :element.points
+                                }
+                                )
+                              }
+                              );
+                             
+                            }
+                            return new GetPastArticleActionSuccess(pastArticle);
+                          }else{
+                            return new GetArticleActionError("NOT FOUND");
+                          }
+                          
+                        }),
+                        catchError((err)=>of(new GetArticleActionError(err.message))))
+    
+                })
+   
+            )
+        );
 }

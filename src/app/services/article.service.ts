@@ -31,18 +31,25 @@ export class ArticleService {
       return this.http.get<any>(URL);
     }
 
+    getPastArticles(dateStart : number,dateEnd : number , page:number = null){
+      let pageFilter :string = "";
+      page ? pageFilter = `&page=${page}` : '';
+      const URL = `${environment.API_BASE_URL_TAG}story&numericFilters=created_at_i>${dateStart},created_at_i<${dateEnd}`+pageFilter;
+      return this.http.get<any>(URL);
+    }
+
     getNumStory(date){
-      return this.http.get(`https://hn.algolia.com/api/v1/search_by_date?tags=story&numericFilters=created_at_i>${date}`);
+      return this.http.get(`${environment.API_BASE_URL_TAG}story&numericFilters=created_at_i>${date}`);
     }
 
     getNumComment(date){
-      return this.http.get(`https://hn.algolia.com/api/v1/search_by_date?tags=comment&numericFilters=created_at_i>${date}`);
+      return this.http.get(`${environment.API_BASE_URL_TAG}comment&numericFilters=created_at_i>${date}`);
     }
     getNumAsk(date){
-      return this.http.get(`https://hn.algolia.com/api/v1/search_by_date?tags=ask_hn&numericFilters=created_at_i>${date}`);
+      return this.http.get(`${environment.API_BASE_URL_TAG}ask_hn&numericFilters=created_at_i>${date}`);
     }
     getNumShow(date){
-      return this.http.get(`https://hn.algolia.com/api/v1/search_by_date?tags=show_hn&numericFilters=created_at_i>${date}`);
+      return this.http.get(`${environment.API_BASE_URL_TAG}show_hn&numericFilters=created_at_i>${date}`);
     }
 
     toTimestamp(strDate){

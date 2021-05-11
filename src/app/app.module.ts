@@ -20,6 +20,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { articleReducer } from './store/articles.reducer';
 import { HomeComponent } from './components/home/home.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -41,6 +42,7 @@ import { HomeComponent } from './components/home/home.component';
     HttpClientModule,
     AppRoutingModule,
     FormsModule,
+    NgbModule,
     StoreModule.forRoot({articleState :articleReducer }),
     EffectsModule.forRoot([ArticleEffects]),
     StoreDevtoolsModule.instrument(),

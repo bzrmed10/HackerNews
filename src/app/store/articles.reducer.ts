@@ -16,7 +16,7 @@ export interface ArticlesState {
     errorMessage : string,
     dataState : ArticleStateEnum,
     index : number,
-    searching : boolean,
+    searching : string,
     seachPage : number,
 
 }
@@ -27,7 +27,7 @@ const INIT_STATE :ArticlesState = {
     errorMessage : "",
     dataState :ArticleStateEnum.INITIAL,
     index : 0,
-    searching : false,
+    searching : "initial",
     seachPage : 0,
 
 }
@@ -38,9 +38,35 @@ export function articleReducer(state = INIT_STATE ,action :Action ) :ArticlesSta
             return {
                 ...state ,
                 dataState:ArticleStateEnum.LOADING,
-                searching : false,
+                searching : "initial",
             }
-
+        case ArticleActionsTypes.GET_PAST_ARTICLES:
+            let dataState2 = ArticleStateEnum.LOADED;
+            
+            if((<ArticleActions>action).payload.page == 0 ){
+                dataState2 = ArticleStateEnum.LOADING;
+            }
+           return {
+               ...state,
+               dataState:dataState2,
+               articleIds:[],
+               index:0,
+               searching:"pastArticle",
+               seachPage :(<ArticleActions>action).payload.page,
+           }
+        case ArticleActionsTypes.GET_PAST_ARTICLES_SUCCESS:
+            let pastArr :Article[] = [];  
+            if(state.seachPage == 0 ){
+                pastArr = [...(<ArticleActions>action).payload];
+            }else{
+                pastArr = [...state.articles,...(<ArticleActions>action).payload];
+            }         
+            
+                return {
+                    ...state,
+                    articles:pastArr,
+                    dataState:ArticleStateEnum.LOADED,
+                } 
         case ArticleActionsTypes.GET_ARTICLES_ID : 
             return {
                 ...state ,
@@ -98,7 +124,7 @@ export function articleReducer(state = INIT_STATE ,action :Action ) :ArticlesSta
                 ...state,
                 dataState:dataState,
                 articleIds :[],
-                searching :true,
+                searching :"search",
                 seachPage :(<ArticleActions>action).payload.page
             }
         case ArticleActionsTypes.SEARCH_KEYWORD_SUCCESS:

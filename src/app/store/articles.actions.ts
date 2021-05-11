@@ -4,6 +4,8 @@ import { Action } from "@ngrx/store";
 export enum ArticleActionsTypes {
     GET_ARTICLES = "[Article] Get Article",
     GET_ARTICLES_ID = "[Article] Get ID Article ",
+    GET_PAST_ARTICLES = "[Article] Get past article",
+    GET_PAST_ARTICLES_SUCCESS = "[Article] Get past article Success",
     GET_ARTICLES_SUCCESS = "[Article] Get Article success",
     GET_MORE_INITIAL_ARTICLES = "[Article] Get more initial Article",
     LOAD_MORE_ARTICLES = "[Article] Load more Articles",
@@ -12,7 +14,7 @@ export enum ArticleActionsTypes {
     SEARCH_KEYWORD = "[Article] search articles by Keyword",
     SEARCH_KEYWORD_SUCCESS = "[Article] search articles by Keyword success",
 
-
+    
 }
 
 
@@ -20,6 +22,18 @@ export class GetArticleAction implements Action {
 
     type : ArticleActionsTypes = ArticleActionsTypes.GET_ARTICLES;
     constructor( public payload:any){}
+}
+
+export class GetPastArticleAction implements Action {
+
+    type : ArticleActionsTypes = ArticleActionsTypes.GET_PAST_ARTICLES;
+    constructor( public payload:{dateStart :number ,dateEnd :number , page : number}){}
+}
+
+export class GetPastArticleActionSuccess implements Action {
+
+    type : ArticleActionsTypes = ArticleActionsTypes.GET_PAST_ARTICLES_SUCCESS;
+    constructor( public payload:Article[]){}
 }
 
 export class SearchKeywordAction implements Action {
@@ -68,4 +82,4 @@ export type ArticleActions =
 GetArticleAction | GetArticleActionSuccess 
 | GetArticleActionError | GetArticleIdAction
 |GetMoreInitialArticleAction | SearchKeywordAction 
-| SearchKeywordActionSuccess;
+| SearchKeywordActionSuccess | GetPastArticleAction |GetPastArticleActionSuccess;
