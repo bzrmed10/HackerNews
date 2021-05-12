@@ -1,5 +1,5 @@
 
-        <div class="col-xs-12 my-4">
+        <div class="col-xs-12 mt-4 scroll">
     
             <ul class="menuList">
                 <li>
@@ -23,8 +23,9 @@
                 <li class="mt-2">
                     <a class="btnMenu"><i class="fa fa-search" (click)="onSearchBtn()"></i></a>
                 </li>
+
             </ul>
-            
+
         </div>
         <div class="col-xs-12 mb-2" *ngIf="showSearch">
             <form #f="ngForm" (ngSubmit)="onSearch(f.value)" class="form-inline">
